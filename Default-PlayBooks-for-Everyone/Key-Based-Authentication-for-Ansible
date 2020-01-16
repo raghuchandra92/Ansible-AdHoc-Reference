@@ -1,0 +1,12 @@
+#Ansible Playbook can be used to deploy your public key to the <remote_user> account on all managed hosts using the -
+#authorized_key module.
+     - name: Public key is deployed to managed hosts for Ansible
+         hosts: all
+     tasks:
+       - name: Ensure key is in root's ~/.ssh/authorized_hosts
+     authorized_key:
+         user: root
+         state: present
+         key: '{{ item }}'
+     with_file:
+   - ~/.ssh/id_rsa.pub
