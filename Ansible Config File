@@ -36,3 +36,19 @@ tasks:
           key: '{{ item }}'
    with_file:
       - ~/.ssh/id_rsa.pub
+
+#The very first time when logging into Ansible you need to create Key based authentication, once done then you need
+#to give priviliges to ansible user to perform tasks just like a root with out asking password, similiar like
+#adding random user to sudoers file on unix in '{/etc/sudoers}', so use below section to give previliges for Ansible user,
+[defaults]
+inventory = ./inventory
+remote_user = ansible
+ask_pass = false
+[privilege_escalation]
+become = true
+become_method = sudo
+become_user = root
+become_ask_pass = false
+#from above become_user varaible you are esclating previliges to ansible and asking it to be root i.e adding in sudoers file
+
+
