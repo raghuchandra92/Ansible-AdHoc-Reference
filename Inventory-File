@@ -1,0 +1,15 @@
+
+
+[MYSQL]
+mysql.db07.usregion.com
+mysql.db02.us-west-region.com
+mysql.db2.oregon.com
+
+[NOSQL]
+nosql.cassandra.com
+cass.db01.useast.com
+cass.db02.uswest.com
+
+[Databases:children]
+MYSQL
+NOSQL
