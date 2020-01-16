@@ -1,4 +1,8 @@
-#Most of the content in this file is taken from REDHAT offical Ansible Guide, this is just for reference
+#I created this page just for my understanding and reference,Most of the content in this file is taken from REDHAT offical- 
+#Ansible Guide.
+
+
+
 #By default Ansible searches for inverntory files in nearly four different location, list accroding to priority
 $ANSIBLE_CONFIG           #searches in 'env' for this varaible
 ./ansible.cfg             #searches in the directory when ansible command is executed,it is used instead of the global file or the user's personal file.
@@ -25,6 +29,8 @@ ansible servers --list-hosts -v
 inventory = ./inventory   -- Location of inventory file
 remote_user = root        -- On the managed hosts/remote hosts, thru which user you want Ansible to execute your play book
 ask_pass = true/false     -- If this property is mentioned then you need to enter password
+
+############################################################################################################################
 #you can also setup ansible Authorised key based authentication on all hosts to aviod password, ansible has module in it,
   -name: Public key is deployed to managed hosts for Ansible
    hosts: all
@@ -36,6 +42,7 @@ tasks:
           key: '{{ item }}'
    with_file:
       - ~/.ssh/id_rsa.pub
+#############################################################################################################################
 
 #The very first time when logging into Ansible you need to create Key based authentication, once done then you need
 #to give priviliges to ansible user to perform tasks just like a root with out asking password, similiar like
