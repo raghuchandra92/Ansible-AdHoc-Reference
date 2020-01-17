@@ -1,0 +1,31 @@
+# 'Command' and 'shell' require a working Python installation on the managed host. A third module, 'raw', can run a command 
+directly on the remote shell, bypassing the module subsystem. This is useful when managing systems that cannot have 
+Python installed (for example, a network router). It can also be used to install Python on a host that doesn't have it yet.
+
+# In most circumstances, it is a recommended practice that you avoid the 'command', 'shell', and 'raw "run command"' modules.
+Most other modules are idempotent and can perform change tracking automatically.They can test the state of systems and do 
+nothing if those systems are already in the correct state. By contrast, it's much more complicated to use the 
+"run command" modules in a way which will be idempotent. Depending on them might make it harder for you to be confident 
+that re-running an ad hoc command or playbook won't cause an unexpected failure.
+
+
+#The command module allows administrators to quickly execute remote commands on managed hosts. These commands are not 
+processed by the shell on the managed hosts. As such, they cannot access shell environment variables or perform 
+shell operations, such as redirection and piping.For situations where commands require shell processing, administrators 
+can use the shell module. Like the command module, you pass the commands to be executed as arguments to the module in the 
+ad hoc command. Ansible then executes the command remotely on the managed hosts. Unlike the command module, the commands 
+are processed through a shell on the managed hosts. Therefore, shell environment variables are accessible and shell 
+operations such as redirection and piping are also available for use.
+
+
+[user@userlappy ~]$ ansible localhost -m command -a set
+localhost | FAILED | rc=2 >>
+[Errno 2] No such file or directory
+
+
+[user@userlappy ~]$ ansible localhost -m shell -a set
+localhost | SUCCESS | rc=0 >>
+BASH=/bin/sh
+BASHOPTS=cmdhist:extquote:force_fignore:hostcomplete:interact
+ive_comments:progcomp:promptvars:sourcepath
+BASH_ALIASES=()
