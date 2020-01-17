@@ -1,0 +1,23 @@
+# Ansible file modules 
+copy (copy a local file to the managed host), 
+get_url (download a file to the managed host), 
+synchronize (to synchronize content like rsync), 
+file (set permissions and other properties of a file), 
+lineinfile (make sure a certain line is or isn't in a file)
+
+
+#Ansible Software package management modules 
+yum, dnf, apt, pip, gem etc
+
+
+#Ansible System administration tools
+service (control daemons) 
+user (add, remove, and configure users)
+uri (which interacts with a web server and can test functionality or issue API requests)
+
+
+#Most modules take arguments. The list of arguments available for a module can be found in the module's documentation. 
+#Ad hoc commands pass arguments to modules using the -a option. When no argument is needed, omit the -a option from ad-hoc 
+command. If multiple arguments need to be specified, supply them as a quoted space-separated list.
+
+
