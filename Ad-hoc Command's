@@ -1,3 +1,19 @@
 #create any user on managed hosts using 'user' module
 ansible -m user -a 'name=batman uid=4321 state=present' db01.prod.mysql-west.com
 
+#execute arbitrary commands on the command line of managed hosts
+[user@userlappy ~]$ ansible sqlservers -m command -a /usr/bin/hostname
+sql-server1.prod.west-US01.com | SUCCESS | rc=0 >>
+sql-server1.prod.west-US01.com
+sql-server2.prod.west-US01.com | SUCCESS | rc=0 >>
+sql-server2.prod.west-US01.com
+
+#For better readability and parsing of ad hoc command output, administrators might find it useful to have a single line 
+of output for each operation performed on a managed host. You can use the -o option to display the output of 
+Ansible ad hoc commands in a single line format.
+[user@userlappy ~]$ ansible sqlservers -m command -a /usr/bin/hostname -o
+sql-server1.prod.west-US01.com | SUCCESS | rc=0 >> (stdout) sql-server1.prod.west-US01.com
+sql-server2.prod.west-US01.com | SUCCESS | rc=0 >> (stdout) sql-server2.prod.west-US01.com
+
+
+
