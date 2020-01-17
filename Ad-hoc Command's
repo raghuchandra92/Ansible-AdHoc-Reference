@@ -1,5 +1,17 @@
+#Ansible Command-line Options
+
+                            SETTING COMMAND-LINE OPTION
+                     inventory                               -i
+                     remote_user                             -u
+                     become --become                         -b
+                     become_method                          --become-method
+                     become_user                            --become-user
+                     become_ask_pass --ask-become-pass,      -K
+
+
 #create any user on managed hosts using 'user' module
 ansible -m user -a 'name=batman uid=4321 state=present' db01.prod.mysql-west.com
+
 
 #execute arbitrary commands on the command line of managed hosts
 [user@userlappy ~]$ ansible sqlservers -m command -a /usr/bin/hostname
@@ -7,6 +19,7 @@ sql-server1.prod.west-US01.com | SUCCESS | rc=0 >>
 sql-server1.prod.west-US01.com
 sql-server2.prod.west-US01.com | SUCCESS | rc=0 >>
 sql-server2.prod.west-US01.com
+
 
 #For better readability and parsing of ad hoc command output, administrators might find it useful to have a single line 
 of output for each operation performed on a managed host. You can use the -o option to display the output of 
