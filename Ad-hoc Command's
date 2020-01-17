@@ -1,0 +1,3 @@
+#create any user on managed hosts using 'user' module
+ansible -m user -a 'name=batman uid=4321 state=present' db01.prod.mysql-west.com
+
