@@ -17,4 +17,8 @@ same indentation.
 • Items that are children of another item must be indented more than their parents.
 You can also add blank lines for readability.
 
+#The order in which the plays and tasks are listed in a playbook is important, because Ansible runs them in the same order.
+
+
+
 
