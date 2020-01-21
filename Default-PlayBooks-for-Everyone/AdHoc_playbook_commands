@@ -1,0 +1,7 @@
+ansible-playbook <play_book>.yml
+ansible-playbook --syntax-check <play_book>.yml
+
+#Executing a Dry Run (-C option).Ansible reports what changes will occur if the playbook were executed, 
+#but does not make any actual changes to managed hosts
+ansible-playbook -C <play_book>.yml
+
