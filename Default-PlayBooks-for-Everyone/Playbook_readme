@@ -1,0 +1,20 @@
+PLAYBOOK
+# A play is an ordered set of tasks which should be run against hosts selected from your inventory. A playbook is a text file 
+that contains a list of one or more plays to run in order. Plays allow you to change a lengthy, complex set of manual 
+administrative tasks into an easily repeatable routine with predictable and successful outcomes. In a playbook, you can 
+save the sequence of tasks in a play into a human-readable and immediately runnable form. The tasks themselves, because of 
+the way in which they are written, document the steps needed to deploy your application or infrastructure.
+
+
+
+
+
+# A playbook is a text file written in YAML format, and is normally saved with the extension yml. The playbook primarily 
+uses indentation with space characters to indicate the structure of its data. YAML doesn't place strict requirements on 
+how many spaces are used for the indentation, but there are two basic rules.
+• Data elements at the same level in the hierarchy (such as items in the same list) must have the
+same indentation.
+• Items that are children of another item must be indented more than their parents.
+You can also add blank lines for readability.
+
+
