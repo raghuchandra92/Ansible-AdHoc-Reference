@@ -1,1 +1,21 @@
-#
+#Ansible supports variables that can be used to store values that can be reused throughout files in an entire Ansible project. 
+#This can help simplify creation and maintenance of a project and reduce the incidence of errors
+#Variables provide a convenient way to manage dynamic values for a given environment in Ansible project. 
+
+#Some examples of values that variables might contain include
+• Users to create
+• Packages to install
+• Services to restart
+• Files to remove
+• Archives to retrieve from the Internet
+
+#Variables have names which consist of a string that must start with a letter,can only have letters, numbers, and underscores
+
+#Variables can be defined in a bewildering variety of places in an Ansible project. However, this can be simplified to 
+#three basic scope levels:
+• Global scope: Variables set from the command line or Ansible configuration
+• Play scope: Variables set in the play and related structures
+• Host scope: Variables set on host groups and individual hosts by the inventory, fact gathering, or registered tasks
+
+#If the same variable name is defined at more than one level, the higher wins. So variables defined by the inventory are 
+#overridden by variables defined by the playbook, which are overridden by variables defined on the command line.
