@@ -19,3 +19,6 @@
 
 #If the same variable name is defined at more than one level, the higher wins. So variables defined by the inventory are 
 #overridden by variables defined by the playbook, which are overridden by variables defined on the command line.
+
+#Playbook variables can be defined in multiple ways. One of the simplest is to place it in a vars block at the beginning of a 
+#playbook
