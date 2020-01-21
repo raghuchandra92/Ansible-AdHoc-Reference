@@ -30,4 +30,5 @@ sql-server2.prod.west-US01.com | SUCCESS | rc=0 >> (stdout) sql-server2.prod.wes
 [user@userlappy ~]$ ansible-doc <module_name>
 
 
-
+#to see what facts are gathered for managed hosts, you can run setup with an ad hoc command on those hosts
+[user@userlappy ~]$ ansible sql-server1.prod.west-US01.com -m setup
