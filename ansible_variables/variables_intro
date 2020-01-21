@@ -20,5 +20,38 @@
 #If the same variable name is defined at more than one level, the higher wins. So variables defined by the inventory are 
 #overridden by variables defined by the playbook, which are overridden by variables defined on the command line.
 
-#Playbook variables can be defined in multiple ways. One of the simplest is to place it in a vars block at the beginning of a 
-#playbook
+#Playbook variables can be defined in multiple ways. 
+#One of the simplest is to place it in a vars block at the beginning of a playbook.
+      - hosts: all
+             vars:
+               user: admin
+               home: /home/admin
+
+#It is also possible to define playbook variables in external files.
+#In this case, instead of using vars, the vars_files directive may be used
+            - hosts: all
+                vars_files:
+                  - vars/users.yml
+                  
+#After the variables have been declared, administrators can use the variables in tasks. 
+#Variables are referenced by placing the variable name in double curly braces. 
+#Ansible substitutes the variable with its value when the task is executed.
+
+
+
+
+
+
+
+#When a variable is used as the first element to start a value, quotes are mandatory.
+#This prevents Ansible from considering the variable as starting a YAML dictionary.
+   vars:
+      user: admin
+   tasks:
+      # This line will read: Creates the user admin
+      - name: Creates the user {{ user }}
+   user:
+      # This line will create the user named admin
+      name: "{{ user }}"
+      
+  
