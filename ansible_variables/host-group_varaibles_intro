@@ -1,0 +1,15 @@
+#Inventory variables that apply directly to hosts fall into two broad categories: host variables that apply to a specific host,
+and group variables that apply to all hosts in a host group or in a group of host groups. 
+
+#Host variables take precedence over group variables, but variables defined by a playbook take precedence over both.
+
+#One way to define host variables and group variables is to do it directly in the inventory file.Among the disadvantages of 
+this approach, it makes the inventory file more difficult to work with, mixes information about hosts and variables in the 
+same file, and uses an obsolete syntax.
+
+#The preferred approach is to create two directories in the same working directory as the inventory file or directory, 
+group_vars and host_vars. These directories contain files defining group variables and host variables, respectively.
+
+#The recommended practice is to define inventory variables using host_vars and group_vars directories, and not to define 
+them directly in the inventory file or files.
+
