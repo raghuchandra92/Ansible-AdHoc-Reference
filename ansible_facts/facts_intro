@@ -1,0 +1,135 @@
+#Ansible facts are variables that are automatically discovered by Ansible on a managed host. Facts contain host-specific 
+information that can be used just like regular variables in plays, conditionals, loops, or any other statement that depends 
+on a value collected from a managed host.
+
+#Some of the facts gathered for a managed host might include
+• The host name
+• The kernel version
+• The network interfaces
+• The IP addresses
+• The version of the operating system
+• Various environment variables
+• The number of CPUs
+• The available or free memory
+• The available disk space
+
+#Facts are a convenient way to retrieve the state of a managed host and to determine what action to take based on that state.
+
+#Every play runs the setup module automatically before the first task in order to gather facts. This is reported as the 
+Gathering Facts task in Ansible 2.3, or simply as setup in earlier versions of Ansible. You don't need to have a task to 
+run setup in your play, it is automatically run for you.
+
+#In order to see what facts are gathered for managed hosts, you can run setup with an ad hoc command on those hosts
+[user@lappy ~]$ ansible mysql01.dbpord.useast01.com -m setup
+
+#When a fact is used in a playbook, Ansible dynamically substitutes the variable name with the corresponding value:
+          ---
+              - hosts: all
+                 tasks:
+                    - name: Prints various Ansible facts
+                       debug:
+                         msg: >
+                         The default IPv4 address of {{ ansible_fqdn }}
+                         is {{ ansible_default_ipv4.address }}
+                         
+#Output shows how Ansible was able to query the managed node and dynamically use the system information to update the variable
+[user@lappy ~]$ ansible-playbook playbook.yml
+PLAY ***********************************************************************
+TASK [Gathering Facts] *****************************************************
+ok: [mysql01.dbpord.useast01.com]
+
+TASK [Prints various Ansible facts] ****************************************
+ok: [mysql01.dbpord.useast01.com] => {
+          "msg": "The default IPv4 address of demo1.example.com is
+                 172.25.250.10"
+}
+PLAY RECAP *****************************************************************
+mysql01.dbpord.useast01.com : ok=2 changed=0 unreachable=0 failed=0
+
+
+
+#Facts can be also used to create dynamic groups of hosts that match particular criteria
+#To disable fact gathering for a play, set the gather_facts key to no
+---
+       - name: This play gathers no facts automatically
+           hosts: large_farm
+           gather_facts: no
+ 
+
+#Even if gather_facts: no is set for a play, you can manually gather facts at any time by running a task that uses the 
+setup module
+tasks:
+     - name: Manually gather facts
+        setup:
+        
+#Ansible facts contain extensive information about the system. Administrators can use Ansible filters in order to limit the 
+results returned when gathering facts from a managed node. Filters can be used to:
+• Only retrieve information about network cards.
+• Only retrieve information about disks.
+• Only retrieve information about users.
+
+#To use filters, the expression needs to be passed as an option, using -a 'filter=EXPRESSION'.
+#For example, to only return information about eth0, a filter can be applied on the ansible_eth0 element:
+[user@demo ~]$ ansible demo1.example.com -m setup -a 'filter=ansible_eth0'
+demo1.lab.example.com | SUCCESS => {
+           "ansible_facts": {
+               "ansible_eth0": {
+               "active": true,
+               "device": "eth0",
+               "ipv4": {
+                   "address": "127.0.0.1",
+                   "broadcast": "127.255.255.255",
+                   "netmask": "255.255.255.0",
+                   "network": "127.0.0.1"
+                  },
+                 "ipv6": [
+                        {
+                     "address": "aec2::9846:hh:mn0f:gc9w",
+                     "prefix": "64",
+                     "scope": "link"
+                     }
+                ],
+               "macaddress": "34:gs:8j:jj:44:j4",
+               "module": "vlan",
+               "mtu": 1500,
+               "pciid": "vlan0",
+               "promisc": false,
+               "type": "ether"
+                  }
+              },
+            "changed": false
+             334
+}
+
+
+
+#CUSTOM FACTS
+#Administrators can create custom facts which are stored locally on each managed host. These facts are integrated into the 
+list of standard facts gathered by setup when it runs on the managed host. These allow the managed host to provide arbitrary 
+variables to Ansible which can be used to adjust the behavior of plays. Custom facts can be defined in a static file, 
+formatted as an INI file or using JSON. They can also be executable scripts which generate JSON output, just like a dynamic 
+inventory script.
+
+#By default, setup loads custom facts from files and scripts in each managed host's /etc/ansible/facts.d directory. 
+The name of each file or script must end in .fact in order to be used. Dynamic custom fact scripts must output 
+JSON-formatted facts and must be executable.
+
+
+#MAGIC VARIABLES
+#Some variables are not facts or configured through the setup module, but are also automatically set by Ansible. 
+These magic variables can also be useful to get information specific to a particular managed host.
+#Four of the most useful are:
+-- hostvars #Contains the variables for managed hosts, and can be used to get the values for another managed host's variables.
+              It won't include the managed host's facts if they haven't been gathered yet for that host.
+-- group_names #Lists all groups the current managed host is in.
+-- groups #Lists all groups and hosts in the inventory.
+-- inventory_hostname #Contains the hostname for the current managed host as configured in the inventory. This may be 
+                       different from the hostname reported by facts for various reasons. There are a number of 
+                       other "magic variables" as well. 
+                       
+For more information, see http://docs.ansible.com/ansible/playbooks_variables.html. 
+One way to get insight into their values is to use the debug module to report on the contents of the hostvars variable for 
+a particular host:
+
+[user@lappy ~]$ ansible localhost -m debug -a 'var=hostvars["localhost"]'
+
